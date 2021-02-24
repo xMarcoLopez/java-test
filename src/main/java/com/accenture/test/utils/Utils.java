@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.accenture.test.model.CustomerDTO;
+import com.accenture.test.model.InvoiceDTO;
 import com.accenture.test.model.ProductDTO;
+import com.accenture.test.model.ShoppingCartDTO;
 
 public class Utils {
 
 	public static final List<CustomerDTO> customers = generateCustomers();
 	public static final List<ProductDTO> products = generateProducts();
+	public static final List<InvoiceDTO> invoices = generateInvoices();
+	public static final List<ShoppingCartDTO> shoppingCarts = generateShoppingCarts();
 
 	public static List<CustomerDTO> generateCustomers(){
 		List <CustomerDTO> customers = new ArrayList<CustomerDTO>();
@@ -27,5 +31,15 @@ public class Utils {
 		products.add(new ProductDTO("FGH01", "Iron man costume", 100.000f, 3));
 		products.add(new ProductDTO("IJK01", "Mjolnir", 120.000f, 1));
 		return products;
+	}
+	
+	public static List<InvoiceDTO> generateInvoices(){
+		List<InvoiceDTO> invoices = new ArrayList<InvoiceDTO>();
+		return invoices;
+	}
+	
+	public static List<ShoppingCartDTO> generateShoppingCarts(){
+		List<ShoppingCartDTO> shoppingCarts = new ArrayList<ShoppingCartDTO>();
+		return shoppingCarts;
 	}
 }

@@ -13,6 +13,10 @@ public class InvoiceDTO {
 
 	public InvoiceDTO() {
 	}
+	
+	public InvoiceDTO(Integer id) {
+		this.id = id;
+	}
 
 	public InvoiceDTO(Integer id, Date createdDate, double totalProducts, double iva, double deliveryPrice,
 			ShoppingCartDTO shoppingCart) {
