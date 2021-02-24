@@ -9,6 +9,12 @@ public class CustomerDTO {
 	
 	public CustomerDTO() {}
 	
+	public CustomerDTO(String id, String address, ShoppingCartDTO shoppingCart) {
+		this.id = id;
+		this.address = address;
+		this.shoppingCart = shoppingCart;
+	}
+	
 	public CustomerDTO(String id, String fullName, String address) {
 		this.id = id;
 		this.fullName = fullName;

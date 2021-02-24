@@ -2,25 +2,36 @@ package com.accenture.test.model;
 
 public class ProductDTO {
 
-	private Integer id;
+	private String id;
 	private String name;
-	private float price;
+	private double price;
 	private int amount;
+	private double totalPriceProduct;
 	
 	public ProductDTO() {}
 	
-	public ProductDTO(Integer id, String name, float price, int amount) {
+	public ProductDTO(String id) {
+		this.id = id;
+	}
+	
+	public ProductDTO(String id, double price, int amount) {
+		this.id = id;
+		this.price = price;
+		this.amount = amount;
+	}
+	
+	public ProductDTO(String id, String name, double price, int amount) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.amount = amount;
 	}
 	
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -32,7 +43,7 @@ public class ProductDTO {
 		this.name = name;
 	}
 	
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	
@@ -45,6 +56,14 @@ public class ProductDTO {
 	
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	public double getTotalPriceProduct() {
+		return this.price*this.amount;
+	}
+
+	public void setTotalPriceProduct(double totalPriceProduct) {
+		this.totalPriceProduct = totalPriceProduct;
 	}
 	
 }

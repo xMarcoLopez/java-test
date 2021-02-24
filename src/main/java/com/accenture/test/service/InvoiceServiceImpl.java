@@ -8,34 +8,37 @@ import org.springframework.stereotype.Service;
 import com.accenture.test.model.CustomerDTO;
 import com.accenture.test.model.InvoiceDTO;
 import com.accenture.test.model.ProductDTO;
+import com.accenture.test.model.ShoppingCartDTO;
 
 @Service
-public class InvoiceServiceImpl implements InvoiceService{
+public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public InvoiceDTO generateInvoice(CustomerDTO customer) {
+		float totalProducts = 0;
 		InvoiceDTO invoice = new InvoiceDTO();
 		List<ProductDTO> products = customer.getShoppingCart().getProducts();
-		float totalProducts = 0;
 		
-		for(ProductDTO product : products) {
-			totalProducts = product.getPrice();
+
+		for (ProductDTO product : products) {
+			totalProducts += product.getTotalPriceProduct();
 		}
-		
+	
 		invoice.setTotalProducts(totalProducts);
-		invoice.setIva((float) (totalProducts*0.19));
+		invoice.setIva(totalProducts * 0.19);
 		invoice.setCreatedDate(new Date());
 		invoice.setShoppingCart(customer.getShoppingCart());
-		customer.setShoppingCart(null);
-		
-		if(totalProducts > 70.000 && totalProducts < 100.000) {
-			invoice.setDeliveryPrice((float) 10.000);
+		ShoppingCartDTO shoppingCart = new ShoppingCartDTO();
+		customer.setShoppingCart(shoppingCart);
+
+		if (totalProducts > 70000 && totalProducts < 100000) {
+			invoice.setDeliveryPrice(10000);
 			return invoice;
-		} else if (totalProducts < 100.000) {
+		} else if (totalProducts > 100000) {
 			invoice.setDeliveryPrice(0);
 			return invoice;
 		}
-		
+
 		return null;
 	}
 

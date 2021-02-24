@@ -9,6 +9,10 @@ public class ShoppingCartDTO {
 		
 	public ShoppingCartDTO() {}
 	
+	public ShoppingCartDTO(List<ProductDTO> products) {
+		this.products = products;
+	}
+	
 	public ShoppingCartDTO(Integer id, List<ProductDTO> products) {
 		this.id = id;
 		this.products = products;

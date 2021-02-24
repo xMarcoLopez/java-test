@@ -6,15 +6,15 @@ public class InvoiceDTO {
 
 	private Integer id;
 	private Date createdDate;
-	private float totalProducts;
-	private float iva;
-	private float deliveryPrice;
+	private double totalProducts;
+	private double iva;
+	private double deliveryPrice;
 	private ShoppingCartDTO shoppingCart;
 
 	public InvoiceDTO() {
 	}
 
-	public InvoiceDTO(Integer id, Date createdDate, float totalProducts, float iva, float deliveryPrice,
+	public InvoiceDTO(Integer id, Date createdDate, double totalProducts, double iva, double deliveryPrice,
 			ShoppingCartDTO shoppingCart) {
 		this.id = id;
 		this.createdDate = createdDate;
@@ -40,27 +40,27 @@ public class InvoiceDTO {
 		this.createdDate = createdDate;
 	}
 
-	public float getTotalProducts() {
+	public double getTotalProducts() {
 		return totalProducts;
 	}
 
-	public void setTotalProducts(float totalProducts) {
+	public void setTotalProducts(double totalProducts) {
 		this.totalProducts = totalProducts;
 	}
 
-	public float getIva() {
+	public double getIva() {
 		return iva;
 	}
 
-	public void setIva(float iva) {
+	public void setIva(double iva) {
 		this.iva = iva;
 	}
 
-	public float getDeliveryPrice() {
+	public double getDeliveryPrice() {
 		return deliveryPrice;
 	}
 
-	public void setDeliveryPrice(float deliveryPrice) {
+	public void setDeliveryPrice(double deliveryPrice) {
 		this.deliveryPrice = deliveryPrice;
 	}
 
