@@ -131,9 +131,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 		String deletedStatus = "deleted";
 		String canceledStatus = "canceled";
 		String approbedStatus = "approved";
-		double penalty = 0;
+		
+		double penalty = 0.10;
 		InvoiceDTO penaltyInvoice = new InvoiceDTO();
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
+		
 		if(createdMsTimeLowerThanTwelveHours(invoice_id)) {
 			indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
 			Utils.invoices.remove(indexInvoiceInDB);
@@ -142,7 +144,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		}
 		indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
 		Utils.invoices.get(indexInvoiceInDB).setStatus(canceledStatus);
-		penaltyInvoice.setTotal(invoiceInDB.getTotal() * penalty);
+		penaltyInvoice.setTotal(invoiceInDB.getSubtotal() * penalty);
 		penaltyInvoice.setId(Utils.invoices.size() + 1);
 		penaltyInvoice.setId_customer(invoiceInDB.getId_customer());
 		penaltyInvoice.setDeliveryAddress(invoiceInDB.getDeliveryAddress());
@@ -151,5 +153,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 		Utils.invoices.add(penaltyInvoice);
 		
 		return penaltyInvoice;
+	}
+
+	@Override
+	public InvoiceDTO changeCreatedDate(Integer invoice_id) {
+		Date createdDate = Utils.generateDate();
+		getInvoice(invoice_id).setCreatedDate(createdDate);
+		return getInvoice(invoice_id);
 	}
 }

@@ -12,4 +12,5 @@ public interface InvoiceService {
 	public InvoiceDTO getInvoice(Integer invoice_id);
 	public InvoiceDTO editInvoice(Integer invoice_id, ShoppingCartDTO shoppingCart);
 	public InvoiceDTO deleteInvoice(Integer invoice_id);
+	public InvoiceDTO changeCreatedDate(Integer invoice_id);
 }

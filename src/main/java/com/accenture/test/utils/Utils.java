@@ -1,6 +1,9 @@
 package com.accenture.test.utils;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.accenture.test.model.CustomerDTO;
@@ -41,5 +44,11 @@ public class Utils {
 	public static List<ShoppingCartDTO> generateShoppingCarts(){
 		List<ShoppingCartDTO> shoppingCarts = new ArrayList<ShoppingCartDTO>();
 		return shoppingCarts;
+	}
+	
+	public static Date generateDate() {
+		LocalDateTime date = LocalDateTime.of(2021, 2, 14, 5, 42, 20);
+		Date dateTest = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+		return dateTest;
 	}
 }

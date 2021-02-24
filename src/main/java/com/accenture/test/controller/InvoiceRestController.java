@@ -1,6 +1,5 @@
 package com.accenture.test.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +43,11 @@ public class InvoiceRestController {
 	@PutMapping("/{id}")
 	public InvoiceDTO editInvoice(@PathVariable Integer id, @RequestBody ShoppingCartDTO shoppingCart) {
 		return invoiceService.editInvoice(id, shoppingCart);
+	}
+	
+	@PutMapping("/change-date/{id}")
+	public InvoiceDTO changeCreatedDate(@PathVariable Integer id) {
+		return invoiceService.changeCreatedDate(id);
 	}
 	
 	@DeleteMapping("/{id}")
