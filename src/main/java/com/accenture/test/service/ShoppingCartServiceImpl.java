@@ -1,19 +1,22 @@
 package com.accenture.test.service;
 
-import com.accenture.test.model.Product;
+import com.accenture.test.model.CustomerDTO;
+import com.accenture.test.model.ProductDTO;
 
-public class ShoppingCartServiceImpl implements ShoppingCartService{
+
+public class ShoppingCartServiceImpl implements ShoppingCartService {
+
 
 	@Override
-	public void add(Product product) {
-		// TODO Auto-generated method stub
-		
+	public ProductDTO add(ProductDTO product, CustomerDTO customer) {
+		customer.getShoppingCart().getProducts().add(product);
+		return product;
 	}
 
 	@Override
-	public void remove(Product product) {
-		// TODO Auto-generated method stub
-		
+	public ProductDTO remove(ProductDTO product, CustomerDTO customer) {
+		customer.getShoppingCart().getProducts().remove(product);
+		return product;
 	}
 
 }

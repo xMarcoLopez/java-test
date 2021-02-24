@@ -1,15 +1,15 @@
 package com.accenture.test.model;
 
-public class Product {
+public class ProductDTO {
 
 	private Integer id;
 	private String name;
 	private float price;
 	private int amount;
 	
-	public Product() {}
+	public ProductDTO() {}
 	
-	public Product(Integer id, String name, float price, int amount) {
+	public ProductDTO(Integer id, String name, float price, int amount) {
 		this.id = id;
 		this.name = name;
 		this.price = price;

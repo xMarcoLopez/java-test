@@ -1,19 +1,27 @@
 package com.accenture.test.model;
 
-public class Customer {
+public class CustomerDTO {
 
 	private String id;
 	private String fullName;
 	private String address;
+	private ShoppingCartDTO shoppingCart;
 	
-	public Customer() {}
+	public CustomerDTO() {}
 	
-	public Customer(String id, String fullName, String address) {
+	public CustomerDTO(String id, String fullName, String address) {
 		this.id = id;
 		this.fullName = fullName;
 		this.address = address;
 	}
 	
+	public CustomerDTO(String id, String fullName, String address, ShoppingCartDTO shoppingCart) {
+		this.id = id;
+		this.fullName = fullName;
+		this.address = address;
+		this.shoppingCart = shoppingCart;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -36,6 +44,14 @@ public class Customer {
 	
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public ShoppingCartDTO getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCartDTO shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 		
 }

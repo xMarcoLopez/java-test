@@ -1,9 +1,10 @@
 package com.accenture.test.service;
 
-import com.accenture.test.model.Product;
+import com.accenture.test.model.CustomerDTO;
+import com.accenture.test.model.ProductDTO;
 
 public interface ShoppingCartService {
 
-	public void add(Product product);
-	public void remove(Product product);
+	public ProductDTO add(ProductDTO product, CustomerDTO Customer);
+	public ProductDTO remove(ProductDTO product, CustomerDTO Customer);
 }
