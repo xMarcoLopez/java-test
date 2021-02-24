@@ -6,9 +6,13 @@ public class InvoiceDTO {
 
 	private Integer id;
 	private Date createdDate;
-	private double totalProducts;
+	private String id_customer;
+	private String deliveryAddress;
+	private double subtotal;
 	private double iva;
 	private double deliveryPrice;
+	private double total;
+	private String status;
 	private ShoppingCartDTO shoppingCart;
 
 	public InvoiceDTO() {
@@ -16,13 +20,15 @@ public class InvoiceDTO {
 	
 	public InvoiceDTO(Integer id) {
 		this.id = id;
-	}
+	}	
 
-	public InvoiceDTO(Integer id, Date createdDate, double totalProducts, double iva, double deliveryPrice,
-			ShoppingCartDTO shoppingCart) {
+	public InvoiceDTO(Integer id, Date createdDate, String id_customer, String deliveryAddress, double subtotal,
+			double iva, double deliveryPrice, ShoppingCartDTO shoppingCart) {
 		this.id = id;
 		this.createdDate = createdDate;
-		this.totalProducts = totalProducts;
+		this.id_customer = id_customer;
+		this.deliveryAddress = deliveryAddress;
+		this.subtotal = subtotal;
 		this.iva = iva;
 		this.deliveryPrice = deliveryPrice;
 		this.shoppingCart = shoppingCart;
@@ -44,12 +50,28 @@ public class InvoiceDTO {
 		this.createdDate = createdDate;
 	}
 
-	public double getTotalProducts() {
-		return totalProducts;
+	public String getId_customer() {
+		return id_customer;
 	}
 
-	public void setTotalProducts(double totalProducts) {
-		this.totalProducts = totalProducts;
+	public void setId_customer(String id_customer) {
+		this.id_customer = id_customer;
+	}
+
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+
+	public double getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
 	}
 
 	public double getIva() {
@@ -59,6 +81,14 @@ public class InvoiceDTO {
 	public void setIva(double iva) {
 		this.iva = iva;
 	}
+	
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
 
 	public double getDeliveryPrice() {
 		return deliveryPrice;
@@ -66,6 +96,14 @@ public class InvoiceDTO {
 
 	public void setDeliveryPrice(double deliveryPrice) {
 		this.deliveryPrice = deliveryPrice;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public ShoppingCartDTO getShoppingCart() {
