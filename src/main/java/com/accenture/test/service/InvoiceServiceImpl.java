@@ -21,7 +21,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		double minValueToGenerateInvoice = 70000;
 		double minValueToFreeDelivery = 100000;
 		double deliveryPrice = 10000;
-		String status = "Approbed";
+		String status = "Approved";
 		InvoiceDTO invoice = new InvoiceDTO();
 		List<ProductDTO> products = customer.getShoppingCart().getProducts();
 
@@ -69,7 +69,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 		return false;
 	}
-	
+
 	@Override
 	public boolean createdMsTimeLowerThanTwelveHours(Integer invoice_id) {
 		Date nowTime = new Date();
@@ -129,6 +129,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public InvoiceDTO deleteInvoice(Integer invoice_id) {
 		int indexInvoiceInDB = 0;
 		String deletedStatus = "deleted";
+		String canceledStatus = "canceled";
+		String approbedStatus = "approved";
+		double penalty = 0;
+		InvoiceDTO penaltyInvoice = new InvoiceDTO();
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
 		if(createdMsTimeLowerThanTwelveHours(invoice_id)) {
 			indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
@@ -136,7 +140,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 			invoiceInDB.setStatus(deletedStatus);
 			return invoiceInDB;
 		}
+		indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
+		Utils.invoices.get(indexInvoiceInDB).setStatus(canceledStatus);
+		penaltyInvoice.setTotal(invoiceInDB.getTotal() * penalty);
+		penaltyInvoice.setId(Utils.invoices.size() + 1);
+		penaltyInvoice.setId_customer(invoiceInDB.getId_customer());
+		penaltyInvoice.setDeliveryAddress(invoiceInDB.getDeliveryAddress());
+		penaltyInvoice.setCreatedDate(new Date());
+		penaltyInvoice.setStatus(approbedStatus);
+		Utils.invoices.add(penaltyInvoice);
 		
-		return null;
+		return penaltyInvoice;
 	}
 }
