@@ -19,18 +19,18 @@ public class ShoppingCartRestController {
 	@Autowired
 	ShoppingCartService shoppingCartService;
 
-	@GetMapping
-	public ProductDTO addProduct(ProductDTO product) {
-		return product;
-	}
-
-	@PostMapping
-	public CustomerDTO addProductsList(@RequestBody CustomerDTO customer) {
-		return customer;
-	}
-
-	@DeleteMapping
-	public ProductDTO removeProduct(ProductDTO product) {
-		return product;
-	}
+//	@GetMapping
+//	public ProductDTO addProduct(ProductDTO product) {
+//		return product;
+//	}
+//
+//	@PostMapping
+//	public CustomerDTO addProductsList(@RequestBody CustomerDTO customer) {
+//		return customer;
+//	}
+//
+//	@DeleteMapping
+//	public ProductDTO removeProduct(ProductDTO product) {
+//		return product;
+//	}
 }
