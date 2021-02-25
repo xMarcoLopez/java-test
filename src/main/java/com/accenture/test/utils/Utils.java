@@ -21,7 +21,7 @@ public class Utils {
 	public static final double iva = 0.19;
 	public static final double minValueToGenerateInvoice = 70000;
 	public static final double minValueToFreeDelivery = 100000;
-	public static final double deliveryPrice = 10000;
+	public static final double shipPrice = 10000;
 	public static final String approvedStatus = "approved";
 	public static final String deletedStatus = "deleted";
 	public static final String canceledStatus = "canceled";

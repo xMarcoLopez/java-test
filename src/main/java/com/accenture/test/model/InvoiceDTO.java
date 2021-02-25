@@ -10,7 +10,7 @@ public class InvoiceDTO {
 	private String shipAddress;
 	private double subtotal;
 	private double iva;
-	private double deliveryPrice;
+	private double shipPrice;
 	private double total;
 	private String status;
 	private ShoppingCartDTO shoppingCart;
@@ -23,14 +23,14 @@ public class InvoiceDTO {
 	}
 
 	public InvoiceDTO(Integer id, Date createdDate, String id_customer, String shipAddress, double subtotal,
-			double iva, double deliveryPrice, ShoppingCartDTO shoppingCart) {
+			double iva, double shipPrice, ShoppingCartDTO shoppingCart) {
 		this.id = id;
 		this.createdDate = createdDate;
 		this.id_customer = id_customer;
 		this.shipAddress = shipAddress;
 		this.subtotal = subtotal;
 		this.iva = iva;
-		this.deliveryPrice = deliveryPrice;
+		this.shipPrice = shipPrice;
 		this.shoppingCart = shoppingCart;
 	}
 
@@ -90,12 +90,12 @@ public class InvoiceDTO {
 		this.total = total;
 	}
 
-	public double getDeliveryPrice() {
-		return deliveryPrice;
+	public double getShipPrice() {
+		return shipPrice;
 	}
 
-	public void setDeliveryPrice(double deliveryPrice) {
-		this.deliveryPrice = deliveryPrice;
+	public void setShipPrice(double shipPrice) {
+		this.shipPrice = shipPrice;
 	}
 	
 	public String getStatus() {
