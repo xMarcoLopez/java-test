@@ -6,6 +6,7 @@ public class ProductDTO {
 	private String name;
 	private double price;
 	private int amount;
+	@SuppressWarnings("unused")
 	private double totalPriceProduct;
 	
 	public ProductDTO() {}

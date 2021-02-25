@@ -22,6 +22,17 @@ public class InvoiceDTO {
 		this.id = id;
 	}
 
+	public InvoiceDTO(String id_customer, String shipAddress, double subtotal, double iva, Date createdDate,
+			String status, ShoppingCartDTO shoppingCart) {
+		this.id_customer = id_customer;
+		this.shipAddress = shipAddress;
+		this.subtotal = subtotal;
+		this.iva = iva;
+		this.createdDate = createdDate;
+		this.status = status;
+		this.shoppingCart = shoppingCart;
+	}
+	
 	public InvoiceDTO(Integer id, Date createdDate, String id_customer, String shipAddress, double subtotal,
 			double iva, double shipPrice, ShoppingCartDTO shoppingCart) {
 		this.id = id;

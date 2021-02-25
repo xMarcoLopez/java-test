@@ -25,7 +25,7 @@ public class Utils {
 	public static final String approvedStatus = "approved";
 	public static final String deletedStatus = "deleted";
 	public static final String canceledStatus = "canceled";
-	public static double penalty = 0.10;
+	public static final double penalty = 0.10;
 
 	public static List<CustomerDTO> generateCustomers(){
 		List <CustomerDTO> customers = new ArrayList<CustomerDTO>();
