@@ -17,38 +17,34 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public InvoiceDTO generateInvoice(CustomerDTO customer) {
 		double subtotal = 0;
-		double iva = 0.19;
-		double minValueToGenerateInvoice = 70000;
-		double minValueToFreeDelivery = 100000;
-		double deliveryPrice = 10000;
-		String status = "Approved";
 		InvoiceDTO invoice = new InvoiceDTO();
+		ShoppingCartDTO emptyShoppingCart = new ShoppingCartDTO();
 		List<ProductDTO> products = customer.getShoppingCart().getProducts();
 
 		for (ProductDTO product : products) {
 			subtotal += product.getTotalPriceProduct();
 		}
 
-		invoice.setId(Utils.autoIncremental.size() + 1);
-		Utils.autoIncremental.add(1);
 		invoice.setSubtotal(subtotal);
-		invoice.setIva(subtotal * iva);
+		invoice.setIva(subtotal * Utils.iva);
 		invoice.setId_customer(customer.getId());
 		invoice.setDeliveryAddress(customer.getAddress());
-		if (invoice.getCreatedDate() == null) {
-			invoice.setCreatedDate(new Date());
-		}
-		invoice.setStatus(status);
+		invoice.setCreatedDate(new Date());
+		invoice.setStatus(Utils.approvedStatus);
 		invoice.setShoppingCart(customer.getShoppingCart());
 		invoice.getShoppingCart().setCustomer(customer);
-		ShoppingCartDTO shoppingCart = new ShoppingCartDTO();
-		customer.setShoppingCart(shoppingCart);
+		
+		customer.setShoppingCart(emptyShoppingCart);
 
-		if (subtotal > minValueToGenerateInvoice && subtotal < minValueToFreeDelivery) {
-			invoice.setDeliveryPrice(deliveryPrice);
+		if (subtotal > Utils.minValueToGenerateInvoice && subtotal < Utils.minValueToFreeDelivery) {
+			invoice.setId(Utils.autoIncremental.size() + 1);
+			Utils.autoIncremental.add(1);
+			invoice.setDeliveryPrice(Utils.deliveryPrice);
 			invoice.setTotal(invoice.getDeliveryPrice() + invoice.getSubtotal() + invoice.getIva());
 			Utils.invoices.add(invoice);
-		} else if (subtotal > minValueToFreeDelivery) {
+		} else if (subtotal > Utils.minValueToFreeDelivery) {
+			invoice.setId(Utils.autoIncremental.size() + 1);
+			Utils.autoIncremental.add(1);
 			invoice.setDeliveryPrice(0);
 			invoice.setTotal(invoice.getDeliveryPrice() + invoice.getSubtotal() + invoice.getIva());
 			Utils.invoices.add(invoice);
@@ -100,8 +96,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public InvoiceDTO editInvoice(Integer invoice_id, ShoppingCartDTO shoppingCart) {
-		double iva = 0.19;
-		double minValueToFreeDelivery = 100000;
+		
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
 		List<ProductDTO> newProducts = shoppingCart.getProducts();
 		double totalNewProducts = 0;
@@ -112,8 +107,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 			if (totalNewProducts >= invoiceInDB.getSubtotal()) {
 				getInvoice(invoice_id).setShoppingCart(shoppingCart);
 				getInvoice(invoice_id).setSubtotal(totalNewProducts);
-				getInvoice(invoice_id).setIva(totalNewProducts * iva);
-				if (getInvoice(invoice_id).getSubtotal() > minValueToFreeDelivery) {
+				getInvoice(invoice_id).setIva(totalNewProducts * Utils.iva);
+				if (getInvoice(invoice_id).getSubtotal() > Utils.minValueToFreeDelivery) {
 					getInvoice(invoice_id).setDeliveryPrice(0);
 					getInvoice(invoice_id).setTotal(getInvoice(invoice_id).getDeliveryPrice()
 							+ getInvoice(invoice_id).getSubtotal() + getInvoice(invoice_id).getIva());
@@ -130,28 +125,24 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Override
 	public InvoiceDTO deleteInvoice(Integer invoice_id) {
 		int indexInvoiceInDB = 0;
-		String deletedStatus = "deleted";
-		String canceledStatus = "canceled";
-		String approbedStatus = "approved";	
-		double penalty = 0.10;
 		InvoiceDTO penaltyInvoice = new InvoiceDTO();
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
 		
 		if(createdMsTimeLowerThanTwelveHours(invoice_id)) {
 			indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
 			Utils.invoices.remove(indexInvoiceInDB);
-			invoiceInDB.setStatus(deletedStatus);
+			invoiceInDB.setStatus(Utils.deletedStatus);
 			return invoiceInDB;
 		} 
 		indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
-		Utils.invoices.get(indexInvoiceInDB).setStatus(canceledStatus);
-		penaltyInvoice.setTotal(invoiceInDB.getSubtotal() * penalty);
+		Utils.invoices.get(indexInvoiceInDB).setStatus(Utils.canceledStatus);
+		penaltyInvoice.setTotal(invoiceInDB.getSubtotal() * Utils.penalty);
 		penaltyInvoice.setId(Utils.autoIncremental.size() + 1);
 		Utils.autoIncremental.add(1);
 		penaltyInvoice.setId_customer(invoiceInDB.getId_customer());
 		penaltyInvoice.setDeliveryAddress(invoiceInDB.getDeliveryAddress());
 		penaltyInvoice.setCreatedDate(new Date());
-		penaltyInvoice.setStatus(approbedStatus);
+		penaltyInvoice.setStatus(Utils.approvedStatus);
 		Utils.invoices.add(penaltyInvoice);
 		
 		return penaltyInvoice;

@@ -18,6 +18,14 @@ public class Utils {
 	public static final List<InvoiceDTO> invoices = generateInvoices();
 	public static final List<ShoppingCartDTO> shoppingCarts = generateShoppingCarts();
 	public static final List<Integer> autoIncremental = generateAutoIncremental();
+	public static final double iva = 0.19;
+	public static final double minValueToGenerateInvoice = 70000;
+	public static final double minValueToFreeDelivery = 100000;
+	public static final double deliveryPrice = 10000;
+	public static final String approvedStatus = "Approved";
+	public static final String deletedStatus = "deleted";
+	public static final String canceledStatus = "canceled";
+	public static double penalty = 0.10;
 
 	public static List<CustomerDTO> generateCustomers(){
 		List <CustomerDTO> customers = new ArrayList<CustomerDTO>();
