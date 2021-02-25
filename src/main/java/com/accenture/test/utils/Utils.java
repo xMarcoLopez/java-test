@@ -22,7 +22,7 @@ public class Utils {
 	public static final double minValueToGenerateInvoice = 70000;
 	public static final double minValueToFreeDelivery = 100000;
 	public static final double deliveryPrice = 10000;
-	public static final String approvedStatus = "Approved";
+	public static final String approvedStatus = "approved";
 	public static final String deletedStatus = "deleted";
 	public static final String canceledStatus = "canceled";
 	public static double penalty = 0.10;
@@ -64,5 +64,13 @@ public class Utils {
 		LocalDateTime date = LocalDateTime.of(2021, 2, 14, 5, 42, 20);
 		Date dateTest = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
 		return dateTest;
+	}
+	
+	public static double calculateSubtotal(List<ProductDTO> products) {
+		double subtotal = 0;
+		for (ProductDTO product : products) {
+			subtotal += product.getTotalPriceProduct();
+		}
+		return subtotal;
 	}
 }

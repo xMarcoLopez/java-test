@@ -16,14 +16,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Override
 	public InvoiceDTO generateInvoice(CustomerDTO customer) {
-		double subtotal = 0;
+		double subtotal = Utils.calculateSubtotal(customer.getShoppingCart().getProducts());
 		InvoiceDTO invoice = new InvoiceDTO();
 		ShoppingCartDTO emptyShoppingCart = new ShoppingCartDTO();
-		List<ProductDTO> products = customer.getShoppingCart().getProducts();
-
-		for (ProductDTO product : products) {
-			subtotal += product.getTotalPriceProduct();
-		}
 
 		invoice.setSubtotal(subtotal);
 		invoice.setIva(subtotal * Utils.iva);
@@ -63,7 +58,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		double totalNewProducts = 0;
 		if (verifyCreatedDateWithHoursInMs(invoice_id, 5)) {
 			for (ProductDTO product : newProducts) {
-				totalNewProducts += product.getPrice() * product.getAmount();
+				totalNewProducts += product.getTotalPriceProduct();
 			}
 			if (totalNewProducts >= invoiceInDB.getSubtotal()) {
 				getInvoice(invoice_id).setShoppingCart(shoppingCart);
