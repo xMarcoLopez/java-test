@@ -56,51 +56,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 	}
 
 	@Override
-	public boolean createdMsTimeLowerThanFiveHours(Integer invoice_id) {
-		Date nowTime = new Date();
-		Date invoice = getInvoice(invoice_id).getCreatedDate();
-		long fiveHoursInMs = 18000000l;
-
-		if (nowTime.getTime() - invoice.getTime() < fiveHoursInMs) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean createdMsTimeLowerThanTwelveHours(Integer invoice_id) {
-		Date nowTime = new Date();
-		Date invoice = getInvoice(invoice_id).getCreatedDate();
-		long twelveHoursInMs = 43200000l;
-
-		if (nowTime.getTime() - invoice.getTime() < twelveHoursInMs) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public InvoiceDTO getInvoice(Integer invoice_id) {
-		InvoiceDTO invoiceToFound = new InvoiceDTO(invoice_id);
-		for (InvoiceDTO invoice : Utils.invoices) {
-			if (invoice.getId() == invoiceToFound.getId()) {
-				invoiceToFound = invoice;
-				return invoiceToFound;
-			}
-		}
-
-		return invoiceToFound;
-	}
-
-	@Override
 	public InvoiceDTO editInvoice(Integer invoice_id, ShoppingCartDTO shoppingCart) {
 		
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
 		List<ProductDTO> newProducts = shoppingCart.getProducts();
 		double totalNewProducts = 0;
-		if (createdMsTimeLowerThanFiveHours(invoice_id)) {
+		if (verifyCreatedDateWithHoursInMs(invoice_id, 5)) {
 			for (ProductDTO product : newProducts) {
 				totalNewProducts += product.getPrice() * product.getAmount();
 			}
@@ -128,7 +89,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		InvoiceDTO penaltyInvoice = new InvoiceDTO();
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
 		
-		if(createdMsTimeLowerThanTwelveHours(invoice_id)) {
+		if(verifyCreatedDateWithHoursInMs(invoice_id, 12)) {
 			indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
 			Utils.invoices.remove(indexInvoiceInDB);
 			invoiceInDB.setStatus(Utils.deletedStatus);
@@ -148,6 +109,32 @@ public class InvoiceServiceImpl implements InvoiceService {
 		return penaltyInvoice;
 	}
 
+	@Override
+	public boolean verifyCreatedDateWithHoursInMs(Integer invoice_id, int hours) {
+		Date nowTime = new Date();
+		Date invoice = getInvoice(invoice_id).getCreatedDate();
+		long hoursInMs = 3600000l * hours;
+
+		if (nowTime.getTime() - invoice.getTime() < hoursInMs) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public InvoiceDTO getInvoice(Integer invoice_id) {
+		InvoiceDTO invoiceToFound = new InvoiceDTO(invoice_id);
+		for (InvoiceDTO invoice : Utils.invoices) {
+			if (invoice.getId() == invoiceToFound.getId()) {
+				invoiceToFound = invoice;
+				return invoiceToFound;
+			}
+		}
+
+		return invoiceToFound;
+	}
+	
 	@Override
 	public InvoiceDTO changeCreatedDate(Integer invoice_id) {
 		Date createdDate = Utils.generateDate();
