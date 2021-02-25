@@ -29,7 +29,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 			subtotal += product.getTotalPriceProduct();
 		}
 
-		invoice.setId(Utils.invoices.size() + 1);
+		invoice.setId(Utils.autoIncremental.size() + 1);
+		Utils.autoIncremental.add(1);
 		invoice.setSubtotal(subtotal);
 		invoice.setIva(subtotal * iva);
 		invoice.setId_customer(customer.getId());
@@ -145,7 +146,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 		indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
 		Utils.invoices.get(indexInvoiceInDB).setStatus(canceledStatus);
 		penaltyInvoice.setTotal(invoiceInDB.getSubtotal() * penalty);
-		penaltyInvoice.setId(Utils.invoices.size() + 1);
+		penaltyInvoice.setId(Utils.autoIncremental.size() + 1);
+		Utils.autoIncremental.add(1);
 		penaltyInvoice.setId_customer(invoiceInDB.getId_customer());
 		penaltyInvoice.setDeliveryAddress(invoiceInDB.getDeliveryAddress());
 		penaltyInvoice.setCreatedDate(new Date());

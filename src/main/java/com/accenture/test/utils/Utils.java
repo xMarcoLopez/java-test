@@ -17,6 +17,7 @@ public class Utils {
 	public static final List<ProductDTO> products = generateProducts();
 	public static final List<InvoiceDTO> invoices = generateInvoices();
 	public static final List<ShoppingCartDTO> shoppingCarts = generateShoppingCarts();
+	public static final List<Integer> autoIncremental = generateAutoIncremental();
 
 	public static List<CustomerDTO> generateCustomers(){
 		List <CustomerDTO> customers = new ArrayList<CustomerDTO>();
@@ -34,6 +35,11 @@ public class Utils {
 		products.add(new ProductDTO("FGH01", "Iron man costume", 100.000f, 3));
 		products.add(new ProductDTO("IJK01", "Mjolnir", 120.000f, 1));
 		return products;
+	}
+	
+	public static List<Integer> generateAutoIncremental(){
+		List<Integer> autoIncremental = new ArrayList<Integer>();
+		return autoIncremental;
 	}
 	
 	public static List<InvoiceDTO> generateInvoices(){
