@@ -35,13 +35,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 			invoice.setId(Utils.autoIncremental.size() + 1);
 			Utils.autoIncremental.add(1);
 			invoice.setShipPrice(Utils.shipPrice);
-			invoice.setTotal(invoice.getShipPrice() + invoice.getSubtotal() + invoice.getIva());
+			invoice.calculateTotal();
 			Utils.invoices.add(invoice);
 		} else if (subtotal > Utils.minValueToFreeDelivery) {
 			invoice.setId(Utils.autoIncremental.size() + 1);
 			Utils.autoIncremental.add(1);
 			invoice.setShipPrice(0);
-			invoice.setTotal(invoice.getShipPrice() + invoice.getSubtotal() + invoice.getIva());
+			invoice.calculateTotal();
 			Utils.invoices.add(invoice);
 		}  else {
 			invoice = null;
@@ -62,11 +62,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 				getInvoice(invoice_id).setIva(totalNewProducts * Utils.iva);
 				if (getInvoice(invoice_id).getSubtotal() > Utils.minValueToFreeDelivery) {
 					getInvoice(invoice_id).setShipPrice(0);
-					getInvoice(invoice_id).setTotal(getInvoice(invoice_id).getShipPrice()
-							+ getInvoice(invoice_id).getSubtotal() + getInvoice(invoice_id).getIva());
+					getInvoice(invoice_id).calculateTotal();
 				} else {
-					getInvoice(invoice_id).setTotal(getInvoice(invoice_id).getShipPrice()
-							+ getInvoice(invoice_id).getSubtotal() + getInvoice(invoice_id).getIva());
+					getInvoice(invoice_id).calculateTotal();
 				}
 
 			}

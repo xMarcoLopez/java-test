@@ -89,6 +89,10 @@ public class InvoiceDTO {
 	public void setTotal(double total) {
 		this.total = total;
 	}
+	
+	public void calculateTotal() {
+		this.total = this.subtotal + this.iva + this.shipPrice;
+	}
 
 	public double getShipPrice() {
 		return shipPrice;
