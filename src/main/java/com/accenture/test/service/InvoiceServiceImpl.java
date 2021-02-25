@@ -40,6 +40,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		}
 		invoice.setStatus(status);
 		invoice.setShoppingCart(customer.getShoppingCart());
+		invoice.getShoppingCart().setCustomer(customer);
 		ShoppingCartDTO shoppingCart = new ShoppingCartDTO();
 		customer.setShoppingCart(shoppingCart);
 
@@ -47,15 +48,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 			invoice.setDeliveryPrice(deliveryPrice);
 			invoice.setTotal(invoice.getDeliveryPrice() + invoice.getSubtotal() + invoice.getIva());
 			Utils.invoices.add(invoice);
-			return invoice;
 		} else if (subtotal > minValueToFreeDelivery) {
 			invoice.setDeliveryPrice(0);
 			invoice.setTotal(invoice.getDeliveryPrice() + invoice.getSubtotal() + invoice.getIva());
 			Utils.invoices.add(invoice);
-			return invoice;
+		}  else {
+			invoice = null;
 		}
 
-		return null;
+		return invoice;
 	}
 
 	@Override
@@ -131,8 +132,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		int indexInvoiceInDB = 0;
 		String deletedStatus = "deleted";
 		String canceledStatus = "canceled";
-		String approbedStatus = "approved";
-		
+		String approbedStatus = "approved";	
 		double penalty = 0.10;
 		InvoiceDTO penaltyInvoice = new InvoiceDTO();
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
@@ -142,7 +142,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 			Utils.invoices.remove(indexInvoiceInDB);
 			invoiceInDB.setStatus(deletedStatus);
 			return invoiceInDB;
-		}
+		} 
 		indexInvoiceInDB = Utils.invoices.indexOf(invoiceInDB);
 		Utils.invoices.get(indexInvoiceInDB).setStatus(canceledStatus);
 		penaltyInvoice.setTotal(invoiceInDB.getSubtotal() * penalty);

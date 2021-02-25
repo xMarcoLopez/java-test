@@ -30,10 +30,10 @@ public class Utils {
 	
 	public static List<ProductDTO> generateProducts(){
 		List<ProductDTO> products = new ArrayList<ProductDTO>();
-		products.add(new ProductDTO("ABC01", "Vibranium shield", 60.000f, 5));
-		products.add(new ProductDTO("DEF01", "War machine armor", 80.000f, 4));
-		products.add(new ProductDTO("FGH01", "Iron man costume", 100.000f, 3));
-		products.add(new ProductDTO("IJK01", "Mjolnir", 120.000f, 1));
+		products.add(new ProductDTO("ABC01", "Vibranium shield", 60000, 5));
+		products.add(new ProductDTO("DEF01", "War machine costume", 80000, 4));
+		products.add(new ProductDTO("FGH01", "Iron man costume", 100000, 3));
+		products.add(new ProductDTO("IJK01", "Mjolnir", 120000, 1));
 		return products;
 	}
 	
