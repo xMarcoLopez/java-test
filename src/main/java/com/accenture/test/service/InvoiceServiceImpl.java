@@ -20,10 +20,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 		InvoiceDTO invoice = new InvoiceDTO();
 		ShoppingCartDTO emptyShoppingCart = new ShoppingCartDTO();
 
-		invoice.setSubtotal(subtotal);
-		invoice.setIva(subtotal * Utils.iva);
 		invoice.setId_customer(customer.getId());
-		invoice.setDeliveryAddress(customer.getAddress());
+		invoice.setShipAddress(customer.getAddress());
+		invoice.setSubtotal(subtotal);
+		invoice.setIva(subtotal * Utils.iva);	
 		invoice.setCreatedDate(new Date());
 		invoice.setStatus(Utils.approvedStatus);
 		invoice.setShoppingCart(customer.getShoppingCart());
@@ -54,12 +54,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 	public InvoiceDTO editInvoice(Integer invoice_id, ShoppingCartDTO shoppingCart) {
 		
 		InvoiceDTO invoiceInDB = getInvoice(invoice_id);
-		List<ProductDTO> newProducts = shoppingCart.getProducts();
-		double totalNewProducts = 0;
+		double totalNewProducts = Utils.calculateSubtotal(shoppingCart.getProducts());
 		if (verifyCreatedDateWithHoursInMs(invoice_id, 5)) {
-			for (ProductDTO product : newProducts) {
-				totalNewProducts += product.getTotalPriceProduct();
-			}
 			if (totalNewProducts >= invoiceInDB.getSubtotal()) {
 				getInvoice(invoice_id).setShoppingCart(shoppingCart);
 				getInvoice(invoice_id).setSubtotal(totalNewProducts);
@@ -96,7 +92,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 		penaltyInvoice.setId(Utils.autoIncremental.size() + 1);
 		Utils.autoIncremental.add(1);
 		penaltyInvoice.setId_customer(invoiceInDB.getId_customer());
-		penaltyInvoice.setDeliveryAddress(invoiceInDB.getDeliveryAddress());
+		penaltyInvoice.setShipAddress(invoiceInDB.getShipAddress());
 		penaltyInvoice.setCreatedDate(new Date());
 		penaltyInvoice.setStatus(Utils.approvedStatus);
 		Utils.invoices.add(penaltyInvoice);
